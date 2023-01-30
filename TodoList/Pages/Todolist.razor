@@ -1,0 +1,57 @@
+﻿@page "/todolist"
+
+    <div class="todoList-container p-5 m-5">
+    
+    <div class="alert alert-primary" role="alert">
+        <h3 class="text-center">Todo-List</h3>
+    </div>
+    
+    <div class="d-grid gap-2">
+        <input class="form-control form-control-lg" type="text" @bind="newTodoItem"/>
+        <button class="btn btn-primary" @onclick="addTodoItem">Add</button>
+    </div>
+
+    <hr/>
+
+    
+    <ol class="list-group">
+        @foreach (string todoItem in todoList)
+        {
+        
+            <li class="list-group-item">
+                <span>@todoItem</span>
+                <button class="btn btn-danger btn-sm float-end" @onclick="(() => deleteTodoItem(todoItem))">
+                    <span class="oi oi-delete"/>
+                </button>
+            </li>
+        }
+    </ol>
+
+    </div>
+
+
+@code {
+    
+    //todo-list which contains one item "Buy Milk"
+    List<string> todoList = new List<string>() {"Buy Milk"};
+
+    string newTodoItem = "";
+
+    //Method which add users input and displays it in the list, if the input is empty nothing will be added.
+    void addTodoItem()
+    {
+        if(string.IsNullOrWhiteSpace(newTodoItem)== false)
+        {
+            todoList.Add(newTodoItem);
+            newTodoItem = "";
+        }     
+    }
+
+    //Method which deletes displayed input from user when button is clicked.
+    void deleteTodoItem(string todoItemToDelete)
+    {
+        todoList.Remove(todoItemToDelete);
+    }
+
+
+}
